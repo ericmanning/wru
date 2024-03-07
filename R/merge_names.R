@@ -66,7 +66,7 @@
 #' data(voters)
 #' \dontrun{try(merge_names(voters, namesToUse = "surname", census.surname = TRUE))}
 #' @keywords internal
-merge_names <- function(voter.file, namesToUse, census.surname, table.surnames = NULL, table.first = NULL, table.middle = NULL, clean.names = TRUE, impute.missing = FALSE, model = "BISG") {
+merge_names <- function(voter.file, namesToUse, census.surname, table.surnames = NULL, table.first = NULL, table.middle = NULL, clean.names = TRUE, impute.missing = FALSE, model = "BISG", name.dictionaries=NULL) {
 
   # check the names
   if (namesToUse == "surname") {
@@ -84,17 +84,12 @@ merge_names <- function(voter.file, namesToUse, census.surname, table.surnames =
     }
   }
 
-  wru_data_preflight()
-
-  path <- ifelse(getOption("wru_data_wd", default = FALSE), getwd(), tempdir())
-
-  first_c <- readRDS(paste0(path, "/wru-data-first_c.rds"))
-  mid_c <- readRDS(paste0(path, "/wru-data-mid_c.rds"))
-  if(census.surname){
-    last_c <- readRDS(paste0(path, "/wru-data-census_last_c.rds"))
-  } else {
-    last_c <- readRDS(paste0(path, "/wru-data-last_c.rds"))
+  if(is.null(name.dictionaries)){
+      stop('merge_names() now requires name.dictionaries for offline use. - EMM')
   }
+  first_c <- name.dictionaries[["first"]]
+  mid_c <- name.dictionaries[["middle"]]
+  last_c <- name.dictionaries[["surname"]]
   
   p_eth <- c("c_whi", "c_bla", "c_his", "c_asi", "c_oth")
   if (is.null(table.surnames)) {
