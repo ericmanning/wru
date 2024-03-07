@@ -320,6 +320,10 @@ predict_race_new <- function(
     }
   }
   
+  first_c <- name.dictionaries[["first"]]
+  mid_c <- name.dictionaries[["middle"]]
+  last_c <- name.dictionaries[["surname"]]
+    
   # check the geographies
   if (surname.only == FALSE) {
     message("Proceeding with Census geographic data at ", census.geo, " level...")
@@ -448,7 +452,11 @@ predict_race_me <- function(
   if (!all(name_types %in% names(voter.file))) {
     stop("When used, 'surname', 'first', and 'middle' must be variable names in voter.file.")
   }
-  
+
+  first_c <- name.dictionaries[["first"]]
+  mid_c <- name.dictionaries[["middle"]]
+  last_c <- name.dictionaries[["surname"]]
+    
   ## Other quick checks...
   stopifnot(
     all(!is.na(voter.file$surname))
