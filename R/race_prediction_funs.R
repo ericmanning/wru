@@ -448,34 +448,6 @@ predict_race_me <- function(
     stop("When used, 'surname', 'first', and 'middle' must be variable names in voter.file.")
   }
   
-  ## Preliminary Data quality checks
-  wru_data_preflight()
-  path <- ifelse(getOption("wru_data_wd", default = FALSE), getwd(), tempdir())
-  
-  if(census.surname){
-    last_c <- readRDS(paste0(path, "/wru-data-census_last_c.rds"))
-  } else {
-    last_c <- readRDS(paste0(path, "/wru-data-last_c.rds"))
-  }
-  if (!is.null(name.dictionaries[["surname"]])) {
-    stopifnot(identical(names(name.dictionaries[["surname"]]), names(last_c)))
-    last_c <- name.dictionaries[["surname"]]
-  } 
-  if("first" %in% name_types){
-    first_c <- readRDS(paste0(path, "/wru-data-first_c.rds"))
-    if (!is.null(name.dictionaries[["first"]])){
-      stopifnot(identical(names(name.dictionaries[["first"]]), names(first_c)))
-      first_c <- name.dictionaries[["first"]]
-    }
-  } 
-  if("middle" %in% name_types){
-    mid_c <- readRDS(paste0(path, "/wru-data-mid_c.rds"))
-    if (!is.null(name.dictionaries[["middle"]])){
-      stopifnot(identical(names(name.dictionaries[["middle"]]), names(mid_c)))
-      mid_c <- name.dictionaries[["middle"]]
-    }
-  } 
-  
   ## Other quick checks...
   stopifnot(
     all(!is.na(voter.file$surname))
