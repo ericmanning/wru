@@ -374,7 +374,8 @@ predict_race_new <- function(
                             table.middle=name.dictionaries[["middle"]],
                             clean.names = TRUE,
                             impute.missing = impute.missing,
-                            model = 'BISG')
+                            model = 'BISG',
+                            name.dictionaries = name.dictionaries)
   
   if (surname.only == TRUE) {
     # Pr(Race | Surname)
