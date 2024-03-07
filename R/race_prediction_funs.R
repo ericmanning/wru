@@ -320,30 +320,6 @@ predict_race_new <- function(
     }
   }
   
-  ## Preliminary Data quality checks
-  wru_data_preflight()
-
-  path <- ifelse(getOption("wru_data_wd", default = FALSE), getwd(), tempdir())
-
-  first_c <- readRDS(paste0(path, "/wru-data-first_c.rds"))
-  mid_c <- readRDS(paste0(path, "/wru-data-mid_c.rds"))
-  if(census.surname){
-    last_c <- readRDS(paste0(path, "/wru-data-census_last_c.rds"))
-  } else {
-    last_c <- readRDS(paste0(path, "/wru-data-last_c.rds"))
-  }
-  if (any(!is.null(name.dictionaries))) {
-    if (!is.null(name.dictionaries[["surname"]])) {
-      stopifnot(identical(names(name.dictionaries[["surname"]]), names(last_c)))
-    }
-    if (!is.null(name.dictionaries[["first"]])) {
-      stopifnot(identical(names(name.dictionaries[["first"]]), names(first_c)))
-    }
-    if (!is.null(name.dictionaries[["middle"]])) {
-      stopifnot(identical(names(name.dictionaries[["middle"]]), names(mid_c)))
-    }
-  }
-  
   # check the geographies
   if (surname.only == FALSE) {
     message("Proceeding with Census geographic data at ", census.geo, " level...")
